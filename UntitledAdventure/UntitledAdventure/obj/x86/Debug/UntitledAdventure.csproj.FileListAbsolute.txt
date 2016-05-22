@@ -22,3 +22,14 @@ C:\Users\test\Google Drive\Hannah and Josh's Summer Game\UntitledAdventure\Untit
 C:\Users\test\Google Drive\Hannah and Josh's Summer Game\UntitledAdventure\UntitledAdventure\obj\x86\Debug\UntitledAdventure.csprojResolveAssemblyReference.cache
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\obj\x86\Debug\UntitledAdventure.exe
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\obj\x86\Debug\UntitledAdventure.pdb
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\obj\x86\Debug\UntitledAdventure.exe
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\obj\x86\Debug\UntitledAdventure.pdb
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\desktop.ini
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\my_font.xnb
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\OpenTK.dll.config
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\UntitledAdventure.exe
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\UntitledAdventure.pdb
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\MonoGame.Framework.dll
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\NVorbis.dll
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\OpenTK.dll
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\obj\x86\Debug\UntitledAdventure.csprojResolveAssemblyReference.cache
