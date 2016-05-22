@@ -19,6 +19,7 @@ namespace UntitledAdventure
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
+        Texture2D background;
 
         GameStates state;
         enum GameStates
@@ -30,11 +31,12 @@ namespace UntitledAdventure
             Map
         };
 
+        // Josh - Implement world space/view space/object space/window space
         private static int sW = 800; // Get Screen Width
         private static int sH = 600; // Get Screen Height
 
-        private int pX = (sW/2);
-        private int pY = (sH/2);
+        private int pX = 1000; //(sW/2);
+        private int pY = 1000; //(sH/2);
 
         Player player;
 
@@ -72,6 +74,7 @@ namespace UntitledAdventure
 
             player = new Player(Content.Load<Texture2D>("Player_Test"), pX, pY);
             font = Content.Load<SpriteFont>("my_font");
+            background = Content.Load<Texture2D>("Background");
         }
 
         /// <summary>
@@ -92,25 +95,26 @@ namespace UntitledAdventure
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
+            //World fliped when implmented background - Have changed x and y
             if(Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                pX--;
-                player.setX(pX);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 pX++;
                 player.setX(pX);
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                pX--;
+                player.setX(pX);
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                pY--;
+                pY++;
                 player.setY(pY);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                pY++;
+                pY--;
                 player.setY(pY);
             }
 
@@ -133,6 +137,7 @@ namespace UntitledAdventure
             //  3. Player/Character             - Own object, stored in variable
             //  4. UI/Map/Pause Menu/etc...     - Set, done in this class (Method perhaps)
 
+            spriteBatch.Draw(background, new Rectangle((pX - background.Width), (pY - background.Height), background.Width, background.Height), Color.GhostWhite);
             spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
             player.draw(spriteBatch);
 

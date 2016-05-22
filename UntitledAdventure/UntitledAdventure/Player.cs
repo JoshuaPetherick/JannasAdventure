@@ -29,7 +29,8 @@ namespace UntitledAdventure
 
         public void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle(x, y, texture.Width, texture.Height), Color.GhostWhite);
+            // Implement boolean if background coming off window space
+            spriteBatch.Draw(texture, new Rectangle(400, 300, texture.Width, texture.Height), Color.GhostWhite);
         }
     }
 }

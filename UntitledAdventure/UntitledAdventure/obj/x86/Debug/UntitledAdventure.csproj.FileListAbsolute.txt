@@ -43,3 +43,5 @@ C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\OpenTK.dll
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\obj\x86\Debug\UntitledAdventure.csprojResolveAssemblyReference.cache
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Player_Test.png
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Player_Test.png
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Background.bmp
