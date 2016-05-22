@@ -23,7 +23,7 @@ namespace UntitledAdventure
             Map
         };
 
-        int sW = 800; // Get Screen Width!!
+        int sW = 800; // Get Screen Width
         int sH = 600; // Get Screen Height
 
         public Game1()

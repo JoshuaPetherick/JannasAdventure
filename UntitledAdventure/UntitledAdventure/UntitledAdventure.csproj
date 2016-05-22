@@ -75,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
+    <Content Include="Content\Enemy_Test.png" />
+    <Content Include="Content\Map_Test.png" />
+    <Content Include="Content\NPC_Test.png" />
+    <Content Include="Content\Other1_Test.png" />
+    <Content Include="Content\Other2_Test.png" />
+    <Content Include="Content\Player_Test.png" />
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
