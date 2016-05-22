@@ -57,6 +57,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,7 +82,9 @@
     <Content Include="Content\NPC_Test.png" />
     <Content Include="Content\Other1_Test.png" />
     <Content Include="Content\Other2_Test.png" />
-    <Content Include="Content\Player_Test.png" />
+    <Content Include="Content\Player_Test.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

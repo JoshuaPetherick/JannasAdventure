@@ -2,6 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+// NOTES!
+// On conflish errors go to GIT BASH/CMD
+// "cd" to the GIT folder Document > JannasAdventure
+// Then type "git pull"
+// Then "git stash"
+// Then "git pull" again - will solve the issue!
+
 namespace UntitledAdventure
 {
     /// <summary>
@@ -23,8 +30,13 @@ namespace UntitledAdventure
             Map
         };
 
-        int sW = 800; // Get Screen Width
-        int sH = 600; // Get Screen Height
+        private static int sW = 800; // Get Screen Width
+        private static int sH = 600; // Get Screen Height
+
+        private int pX = (sW/2);
+        private int pY = (sH/2);
+
+        Player player;
 
         public Game1()
         {
@@ -57,7 +69,8 @@ namespace UntitledAdventure
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
+            player = new Player(Content.Load<Texture2D>("Player_Test"), pX, pY);
             font = Content.Load<SpriteFont>("my_font");
         }
 
@@ -80,7 +93,26 @@ namespace UntitledAdventure
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            
+            if(Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                pX--;
+                player.setX(pX);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                pX++;
+                player.setX(pX);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                pY--;
+                player.setY(pY);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                pY++;
+                player.setY(pY);
+            }
 
             base.Update(gameTime);
         }
@@ -102,6 +134,7 @@ namespace UntitledAdventure
             //  4. UI/Map/Pause Menu/etc...     - Set, done in this class (Method perhaps)
 
             spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
+            player.draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);
