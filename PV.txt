@@ -1,0 +1,84 @@
+// Hannah Joshs summer idea - Save idea (Example code below)
+//	Save to a txt file, use a | to seperate the entires, then pass them to the relevant variables. Please note the below will probably be one very long sentence...
+
+ Name|Gender|CharLevel|Experience|Health|X|Y|Money|Head|Chest|LeftArm|RightArm|Legs|Feet|Finger1|Finger2|Finger3|Finger4|Finger5|Finger6|Finger7|Finger8|Finger9|Inventory1|Inventory2|Inventory3|Inventory4|Inventory5|Inventory6|Inventory7|Inventory8|Strength|Dexterity|Apptitude|Vitality|Luck
+
+// Use the below to load txt text into an array
+
+ string[] separators = {",", ".", "!", "?", ";", ":", " "};
+ string value = "The handsome, energetic, young dog was playing with his smaller, more lethargic litter mate.";
+ string[] substrings = value.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+// OR
+
+ String value = "This is a short string.";
+ Char delimiter = 's';
+ String[] substrings = value.Split(delimiter);
+
+ String name = substrings(1)
+ String gender = substrings(2)
+ int charlevel = substrings(3)
+ etc...
+
+
+
+// Actual code (Could be used)
+
+ Public boolean Load (stirng fileLocation)
+ {
+	boolean loaded = true;
+ 	try
+ 	{
+ 		string text = System.IO.File.ReadAllText(fileLocation);
+ 		string[] values = text.Split('|', StringSplitOptions.None);
+ 		
+ 		this.name = values[0]
+ 		this.gender = values[1]
+		this.charlevel = int(values[2])
+		etc...
+ 	}
+ 	catch (InvalidCastException e)
+ 	{
+		loaded = false;
+ 	}
+	return loaded;
+ }
+
+// Side notes:
+//	Strength  -  Increases hit damage & Health (little)
+//	Dexterity -  Increases attack speed & stamina 
+//	Apptitude -  Increates magic damage & Manabar (OR action point Max(?) <- Hannah choose)
+//	Vitality  -  Increases Health (Greatly)
+//	Luck	  -  Increases RNG for extra item loot
+
+
+
+// Introduction plan below (Joshua claims this part of the game as his! (Mwahahahaha) )
+//	Begins with a narrator reading lines off a book, with the words appearing as he says them. Certain 
+//	 points of the book will require the players input - These will be indicated below.
+
+"Gather round everybody, for I have a tale to tell! Our tale shall begin with a hero, whos name we shall call 
+(Player inserts name). Our heros tale begins as a runaway (Insert Lord/Lady), whos very life crumbles as his nation is 
+plundered by war. They catch a ride on their best friends ship, in the hopes of 
+(Escaping the war/going on an adventure/finding golden treasure) but of course the trip doesn't go as planned. On the 
+night of our heros flight the city was sieged and the harbour was blocked. With our heros home crumbling around (him/her) 
+they were forced to steal a besieging ship. Luckily (Trained/Dabbled/None (If none then the best friend)) to hijack and 
+flee on the captured vessel. Once out upon the sea, our hero watched a smoke rose from (his/her) home and knew there was 
+no returning. Unprepared but ready to conquer the journey ahead, our hero begins their adventure!"
+
+Game begins! *Round of applause for creativity!!*
+
+
+// Top down (Original) pokemon view - invisible grid (Squares are 5x5 pixels) - So player position is (X * 5), (Y * 5)
+
+// There will set prop locations, which must be loaded during the loading screen. Map will move so player is enternally
+//   in the center of the screen! As the map will be an island, the edges will be a beach and then some water - will have 
+//   to limit the position of the X and Y though. 
+
+// List of what the player can do:
+ -	Move N, NE, E, SE, S, SW, W, NW
+ -	Attack, and use actions
+ -	Enter buildings
+ -	Open a Map(?)	(Map Enum, same as Pause mechanic)
+ -	Pause the game
+
