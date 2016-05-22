@@ -57,7 +57,8 @@ namespace UntitledAdventure
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
+            Texture2D playertext = Content.Load<Texture2D>("Map_Test");
             font = Content.Load<SpriteFont>("my_font");
         }
 
