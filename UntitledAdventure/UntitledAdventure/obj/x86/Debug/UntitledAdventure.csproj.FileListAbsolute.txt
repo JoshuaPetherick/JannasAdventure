@@ -45,3 +45,4 @@ C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\obj\
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Player_Test.png
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Player_Test.png
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Background.bmp
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Enemy_Test.png

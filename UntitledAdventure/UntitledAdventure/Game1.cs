@@ -21,6 +21,8 @@ namespace UntitledAdventure
         SpriteFont font;
         Texture2D background;
 
+        Camera2D camera;
+
         GameStates state;
         enum GameStates
         {
@@ -35,10 +37,11 @@ namespace UntitledAdventure
         private static int sW = 800; // Get Screen Width
         private static int sH = 600; // Get Screen Height
 
-        private int pX = 1000; //(sW/2);
-        private int pY = 1000; //(sH/2);
+        private int pX = (sW/2);
+        private int pY = (sH/2);
 
         Player player;
+        Enemy enemy1;
 
         public Game1()
         {
@@ -56,6 +59,8 @@ namespace UntitledAdventure
         {
             state = GameStates.Menu;
 
+            camera = new Camera2D(GraphicsDevice.Viewport);
+
             graphics.PreferredBackBufferHeight = sH;
             graphics.PreferredBackBufferWidth = sW;
             graphics.ApplyChanges();
@@ -72,6 +77,7 @@ namespace UntitledAdventure
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            enemy1 = new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300);
             player = new Player(Content.Load<Texture2D>("Player_Test"), pX, pY);
             font = Content.Load<SpriteFont>("my_font");
             background = Content.Load<Texture2D>("Background");
@@ -95,27 +101,48 @@ namespace UntitledAdventure
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
-            //World fliped when implmented background - Have changed x and y
-            if(Keyboard.GetState().IsKeyDown(Keys.A))
+
+            // Camera movement
+            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Rotation
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
-                pX++;
-                player.setX(pX);
+                camera.Rotation -= deltaTime;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
             {
-                pX--;
-                player.setX(pX);
+                camera.Rotation += deltaTime;
             }
+
+            // Movement
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                pY++;
+                camera.Position -= new Vector2(0, 120) * deltaTime;
+                pY -= 2;
                 player.setY(pY);
             }
+
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                pY--;
+                camera.Position += new Vector2(0, 120) * deltaTime;
+                pY += 2;
                 player.setY(pY);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                camera.Position -= new Vector2(120, 0) * deltaTime;
+                pX -= 2;
+                player.setX(pX);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                camera.Position += new Vector2(120, 0) * deltaTime;
+                pX += 2;
+                player.setX(pX);
             }
 
             base.Update(gameTime);
@@ -129,7 +156,9 @@ namespace UntitledAdventure
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            var viewMatix = camera.GetViewMatrix();
+
+            spriteBatch.Begin(transformMatrix: viewMatix);
             // Draw shit in here!!
             // Typical Order:
             //  1. Background/Screen            - Done in this class
@@ -137,9 +166,10 @@ namespace UntitledAdventure
             //  3. Player/Character             - Own object, stored in variable
             //  4. UI/Map/Pause Menu/etc...     - Set, done in this class (Method perhaps)
 
-            spriteBatch.Draw(background, new Rectangle((pX - background.Width), (pY - background.Height), background.Width, background.Height), Color.GhostWhite);
+            spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
             spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
             player.draw(spriteBatch);
+            enemy1.draw(spriteBatch);
 
             spriteBatch.End();
             base.Draw(gameTime);
