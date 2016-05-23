@@ -19,9 +19,11 @@ namespace UntitledAdventure
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
-        Texture2D background;
 
+        Texture2D background;
         Camera2D camera;
+        Player player;
+        Enemy enemy1;
 
         GameStates state;
         enum GameStates
@@ -33,15 +35,13 @@ namespace UntitledAdventure
             Map
         };
 
-        // Josh - Implement world space/view space/object space/window space
         private static int sW = 800; // Get Screen Width
         private static int sH = 600; // Get Screen Height
 
-        private int pX = (sW/2);
-        private int pY = (sH/2);
+        private int pX;
+        private int pY;
 
-        Player player;
-        Enemy enemy1;
+        Matrix viewMatix;
 
         public Game1()
         {
@@ -57,9 +57,12 @@ namespace UntitledAdventure
         /// </summary>
         protected override void Initialize()
         {
-            state = GameStates.Menu;
-
+            state = GameStates.Playing;
             camera = new Camera2D(GraphicsDevice.Viewport);
+            font = Content.Load<SpriteFont>("my_font");
+
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
             graphics.PreferredBackBufferHeight = sH;
             graphics.PreferredBackBufferWidth = sW;
@@ -74,13 +77,28 @@ namespace UntitledAdventure
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            switch(state)
+            {
+                case GameStates.Menu:
+                    // If we have a menu image
+                    break;
 
-            enemy1 = new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300);
-            player = new Player(Content.Load<Texture2D>("Player_Test"), pX, pY);
-            font = Content.Load<SpriteFont>("my_font");
-            background = Content.Load<Texture2D>("Background");
+                case GameStates.Loading:
+                    // If we have a background image
+                    break;
+
+                case GameStates.Playing:
+                    background = Content.Load<Texture2D>("Background");
+                    pX = (background.Width / 2);
+                    pY = (background.Height / 2);
+                    player = new Player(Content.Load<Texture2D>("Player_Test"), pX, pY);
+                    camera.Position = new Vector2((pX - (sW / 2)), (pY - (sH / 2)));
+                    enemy1 = new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300);
+
+                    pX = player.x;
+                    pY = player.y;
+                    break;
+            }
         }
 
         /// <summary>
@@ -90,6 +108,7 @@ namespace UntitledAdventure
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            //Content.Unload(); Will unload font...
         }
 
         /// <summary>
@@ -99,50 +118,15 @@ namespace UntitledAdventure
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // Camera movement
-            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            // Rotation
-            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            switch (state)
             {
-                camera.Rotation -= deltaTime;
-            }
+                case GameStates.Menu:
+                    menuUpdate(gameTime);
+                    break;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.E))
-            {
-                camera.Rotation += deltaTime;
-            }
-
-            // Movement
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                camera.Position -= new Vector2(0, 120) * deltaTime;
-                pY -= 2;
-                player.setY(pY);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                camera.Position += new Vector2(0, 120) * deltaTime;
-                pY += 2;
-                player.setY(pY);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                camera.Position -= new Vector2(120, 0) * deltaTime;
-                pX -= 2;
-                player.setX(pX);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                camera.Position += new Vector2(120, 0) * deltaTime;
-                pX += 2;
-                player.setX(pX);
+                case GameStates.Playing:
+                    playingUpdate(gameTime);
+                    break;
             }
 
             base.Update(gameTime);
@@ -155,24 +139,117 @@ namespace UntitledAdventure
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            viewMatix = camera.GetViewMatrix();
 
-            var viewMatix = camera.GetViewMatrix();
+            switch (state)
+            {
+                case GameStates.Menu:
+                    spriteBatch.Begin();
+                    spriteBatch.DrawString(font, "Start", new Vector2((sW / 3), (sH / 5)), Color.GhostWhite);
+                    spriteBatch.DrawString(font, "Exit", new Vector2((sW / 3), (sH / 3)), Color.GhostWhite);
+                    break;
 
-            spriteBatch.Begin(transformMatrix: viewMatix);
-            // Draw shit in here!!
-            // Typical Order:
-            //  1. Background/Screen            - Done in this class
-            //  2. Objects/Enemies              - Classes store in this class array
-            //  3. Player/Character             - Own object, stored in variable
-            //  4. UI/Map/Pause Menu/etc...     - Set, done in this class (Method perhaps)
+                case GameStates.Loading:
 
-            spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
-            spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
-            player.draw(spriteBatch);
-            enemy1.draw(spriteBatch);
+                    break;
+
+                case GameStates.Playing:
+                    // Draw shit in here!!
+                    // Typical Order:
+                    //  1. Background/Screen            - Done in this class
+                    //  2. Objects/Enemies              - Classes store in this class array
+                    //  3. Player/Character             - Own object, stored in variable
+                    //  4. UI/Map/Pause Menu/etc...     - Set, done in this class (Method perhaps)
+                    spriteBatch.Begin(transformMatrix: viewMatix);
+                    spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
+                    spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
+                    enemy1.draw(spriteBatch);
+
+                    player.draw(spriteBatch);
+                    break;
+
+                case GameStates.Paused:
+                    spriteBatch.Begin(transformMatrix: viewMatix);
+                    spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
+                    spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
+                    enemy1.draw(spriteBatch);
+
+                    // Pause menu here - trick here is to stop calling the Update and just read in mouse click positions...
+                    player.draw(spriteBatch);
+                    break;
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private void menuUpdate(GameTime gameTime)
+        {
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                Exit();
+            }
+
+            // If (mouse clicked on start)
+            //{
+                // state = GameStates.Loading;
+                // LoadContent();
+                // Draw(gameTime);
+                // state = GameStates.Playing;
+                // LoadContent();
+            // }
+        }
+
+        private void playingUpdate(GameTime gameTime)
+        {
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                // Change state to Pause!
+                Exit();
+            }
+
+            // Camera movement
+            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //// Rotation
+            //if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            //{
+            //    camera.Rotation -= deltaTime;
+            //}
+
+            //if (Keyboard.GetState().IsKeyDown(Keys.E))
+            //{
+            //    camera.Rotation += deltaTime;
+            //}
+
+            // Movement
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                camera.Position -= new Vector2(0, 120) * deltaTime;
+                pY -= 2;
+                player.y = pY;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                camera.Position += new Vector2(0, 120) * deltaTime;
+                pY += 2;
+                player.y = pY;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                camera.Position -= new Vector2(120, 0) * deltaTime;
+                pX -= 2;
+                player.x = pX;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                camera.Position += new Vector2(120, 0) * deltaTime;
+                pX += 2;
+                player.x = pX;
+            }
         }
     }
 }

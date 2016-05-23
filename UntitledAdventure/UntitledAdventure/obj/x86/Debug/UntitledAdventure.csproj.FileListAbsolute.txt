@@ -46,3 +46,5 @@ C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Player_Test.png
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Background.bmp
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Enemy_Test.png
+C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Background.bmp
+C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Enemy_Test.png

@@ -6,26 +6,17 @@ namespace UntitledAdventure
     class Player
     {
         Texture2D texture;
-        private int x;
-        private int y;
 
         public Player(Texture2D text, int x, int y)
         {
             // Store player image and databse variable
             texture = text;
-            this.x = x;
-            this.y = y;
+            this.x = (x - (text.Width / 2));
+            this.y = (y - (text.Height / 2));
         }
 
-        public void setX(int x)
-        {
-            this.x = x;
-        }
-
-        public void setY(int y)
-        {
-            this.y = y;
-        }
+        public int x { get; set; }
+        public int y { get; set; }
 
         public void draw(SpriteBatch spriteBatch)
         {
