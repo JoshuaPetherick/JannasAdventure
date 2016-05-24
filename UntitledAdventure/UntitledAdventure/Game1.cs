@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 // "cd" to the GIT folder Document > JannasAdventure
 // Then type "git pull"
 // Then "git stash"
-// Then "git pull" again - will solve the issue!
+// Then "git pull" again
 
 namespace UntitledAdventure
 {
@@ -20,10 +20,11 @@ namespace UntitledAdventure
         SpriteBatch spriteBatch;
         SpriteFont font;
 
-        Texture2D background;
+        Texture2D background, menuBackground;
         Camera2D camera;
         Player player;
         Enemy enemy1;
+        Button butt1, butt2;
 
         GameStates state;
         enum GameStates
@@ -38,8 +39,8 @@ namespace UntitledAdventure
         private static int sW = 800; // Get Screen Width
         private static int sH = 600; // Get Screen Height
 
-        private int pX;
-        private int pY;
+        private int pX = 0;
+        private int pY = 0;
 
         Matrix viewMatix;
 
@@ -57,7 +58,7 @@ namespace UntitledAdventure
         /// </summary>
         protected override void Initialize()
         {
-            state = GameStates.Playing;
+            state = GameStates.Menu;
             camera = new Camera2D(GraphicsDevice.Viewport);
             font = Content.Load<SpriteFont>("my_font");
 
@@ -81,10 +82,15 @@ namespace UntitledAdventure
             {
                 case GameStates.Menu:
                     // If we have a menu image
+                    IsMouseVisible = true;
+                    menuBackground = Content.Load<Texture2D>("menu_background");
+                    butt1 = new Button(Content.Load<Texture2D>("start_button"), 400, 300);
+                    butt2 = new Button(Content.Load<Texture2D>("exit_button"), 400, 400);
                     break;
 
                 case GameStates.Loading:
                     // If we have a background image
+                    IsMouseVisible = false;
                     break;
 
                 case GameStates.Playing:
@@ -145,12 +151,14 @@ namespace UntitledAdventure
             {
                 case GameStates.Menu:
                     spriteBatch.Begin();
-                    spriteBatch.DrawString(font, "Start", new Vector2((sW / 3), (sH / 5)), Color.GhostWhite);
-                    spriteBatch.DrawString(font, "Exit", new Vector2((sW / 3), (sH / 3)), Color.GhostWhite);
+                    spriteBatch.Draw(menuBackground, new Rectangle(0, 0, menuBackground.Width, menuBackground.Height), Color.GhostWhite);
+                    butt1.draw(spriteBatch);
+                    butt2.draw(spriteBatch);
                     break;
 
                 case GameStates.Loading:
-
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(menuBackground, new Rectangle(0, 0, menuBackground.Width, menuBackground.Height), Color.GhostWhite);
                     break;
 
                 case GameStates.Playing:
@@ -185,19 +193,26 @@ namespace UntitledAdventure
 
         private void menuUpdate(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-                Exit();
-            }
-
-            // If (mouse clicked on start)
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             //{
-                // state = GameStates.Loading;
-                // LoadContent();
-                // Draw(gameTime);
-                // state = GameStates.Playing;
-                // LoadContent();
-            // }
+            //    Exit();
+            //}
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                if( butt1.collision(Mouse.GetState().X, Mouse.GetState().Y, 1, 1) )
+                {
+                    state = GameStates.Loading;
+                    LoadContent();
+                    Draw(gameTime);
+                    state = GameStates.Playing;
+                    LoadContent();
+                }
+                else if ( butt2.collision(Mouse.GetState().X, Mouse.GetState().Y, 1, 1) )
+                {
+                    Exit();
+                }
+            }
         }
 
         private void playingUpdate(GameTime gameTime)

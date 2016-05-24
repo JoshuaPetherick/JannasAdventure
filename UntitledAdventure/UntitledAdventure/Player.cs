@@ -11,6 +11,8 @@ namespace UntitledAdventure
         {
             // Store player image and databse variable
             texture = text;
+
+            // Moves x & y from top-left corner to center
             this.x = (x - (text.Width / 2));
             this.y = (y - (text.Height / 2));
         }

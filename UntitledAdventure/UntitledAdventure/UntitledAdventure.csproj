@@ -56,6 +56,7 @@
     <StartupObject>UntitledAdventure.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Button.cs" />
     <Compile Include="Camera2D.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game1.cs" />
@@ -84,11 +85,20 @@
     <Content Include="Content\Enemy_Test.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\exit_button.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Map_Test.png" />
+    <Content Include="Content\menu_background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\NPC_Test.png" />
     <Content Include="Content\Other1_Test.png" />
     <Content Include="Content\Other2_Test.png" />
     <Content Include="Content\Player_Test.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\start_button.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="OpenTK.dll.config">

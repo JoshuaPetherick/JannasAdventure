@@ -3,13 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UntitledAdventure
 {
-    class Enemy
+    class Button
     {
         Texture2D texture;
 
-        public Enemy(Texture2D text, int x, int y)
+        public Button(Texture2D text, int x, int y)
         {
-            // Store enemy image and databse variable
+            // Store button image and databse variable
             texture = text;
 
             // Moves x & y from top-left corner to center
@@ -25,7 +25,7 @@ namespace UntitledAdventure
             // Don't ask... just don't ask...
             //  P.s. Axis-Aligned Bounding Box Collision (2D)
             if ((x <= (this.x + texture.Width)) &&
-                ((x + width) >= this.x) && 
+                ((x + width) >= this.x) &&
                 (y <= (this.y + texture.Height)) &&
                 ((y + height) >= this.y))
             {
