@@ -78,7 +78,7 @@ namespace UntitledAdventure
         /// </summary>
         protected override void LoadContent()
         {
-            switch(state)
+            switch (state)
             {
                 case GameStates.Menu:
                     // If we have a menu image
@@ -200,7 +200,7 @@ namespace UntitledAdventure
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if( butt1.collision(Mouse.GetState().X, Mouse.GetState().Y, 1, 1) )
+                if (butt1.collision(Mouse.GetState().X, Mouse.GetState().Y, 1, 1))
                 {
                     state = GameStates.Loading;
                     LoadContent();
@@ -208,7 +208,7 @@ namespace UntitledAdventure
                     state = GameStates.Playing;
                     LoadContent();
                 }
-                else if ( butt2.collision(Mouse.GetState().X, Mouse.GetState().Y, 1, 1) )
+                else if (butt2.collision(Mouse.GetState().X, Mouse.GetState().Y, 1, 1))
                 {
                     Exit();
                 }
@@ -265,6 +265,13 @@ namespace UntitledAdventure
                 pX += 2;
                 player.x = pX;
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad1))
+            {
+                player.castAbility(Content.Load<Texture2D>("Other2_Test"));
+            }
+
+            player.update();
         }
     }
 }
