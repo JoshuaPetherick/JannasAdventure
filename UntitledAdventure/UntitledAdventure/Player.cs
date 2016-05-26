@@ -11,7 +11,10 @@ namespace UntitledAdventure
         Texture2D texture;
         List<Projectile> projectiles = new List<Projectile>();
 
-        public Player(Texture2D texture, int x, int y)
+        private int screenHeight;
+        private int screenWidth;
+
+        public Player(Texture2D texture, int x, int y, int height, int width)
         {
             // Store player image and databse variable
             this.texture = texture;
@@ -19,6 +22,9 @@ namespace UntitledAdventure
             // Moves x & y from top-left corner to center
             this.x = (x - (texture.Width / 2));
             this.y = (y - (texture.Height / 2));
+
+            screenHeight = height;
+            screenWidth = width;
             timer = DateTime.Now;
         }
 
@@ -30,7 +36,7 @@ namespace UntitledAdventure
             if ( timer < DateTime.Now)
             {
                 // Use switch here, possible pass in which key was pressed?
-                projectiles.Add(new Projectile(texture, 10, 100, this.x, this.y));
+                projectiles.Add(new Projectile(texture, 10, 200, this.x, this.y));
                 timer = DateTime.Now.AddSeconds(2);
             }
         }

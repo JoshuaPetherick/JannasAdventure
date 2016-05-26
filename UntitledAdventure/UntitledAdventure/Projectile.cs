@@ -34,8 +34,8 @@ namespace UntitledAdventure
             if (timer < DateTime.Now)
             {
                 // Change based on player direction, however just go north for now
-                y = y + 3;
-                if (y >= (startingY + distance))
+                y = y - 3;
+                if (y <= (startingY - distance))
                 {
                     return true;
                 }
