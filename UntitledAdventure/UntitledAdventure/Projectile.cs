@@ -7,6 +7,7 @@ namespace UntitledAdventure
     class Projectile
     {
         Texture2D texture;
+        Player.PlayerStates state;
         private int x;
         private int y;
         private int startingX;
@@ -16,13 +17,14 @@ namespace UntitledAdventure
         private int distance;
         DateTime timer; 
 
-        public Projectile(Texture2D texture, int damage, int distance, int x, int y)
+        public Projectile(Texture2D texture, int damage, int distance, int x, int y, Player.PlayerStates state)
         {
             this.texture = texture;
             this.damage = damage;
             this.distance = distance;
             this.x = x;
             this.y = y;
+            this.state = state;
 
             startingX = x;
             startingY = y;
@@ -34,12 +36,44 @@ namespace UntitledAdventure
             if (timer < DateTime.Now)
             {
                 // Change based on player direction, however just go north for now
-                y = y - 3;
-                if (y <= (startingY - distance))
+                switch(state)
                 {
-                    return true;
+                    case Player.PlayerStates.North:
+                        y = y - 3;
+                        if (y <= (startingY - distance))
+                        {
+                            return true;
+                        }
+                        timer = DateTime.Now.AddMilliseconds(50);
+                        break;
+
+                    case Player.PlayerStates.East:
+                        x = x + 3;
+                        if (x >= (startingX + distance))
+                        {
+                            return true;
+                        }
+                        timer = DateTime.Now.AddMilliseconds(50);
+                        break;
+
+                    case Player.PlayerStates.South:
+                        y = y + 3;
+                        if (y >= (startingY + distance))
+                        {
+                            return true;
+                        }
+                        timer = DateTime.Now.AddMilliseconds(50);
+                        break;
+
+                    case Player.PlayerStates.West:
+                        x = x - 3;
+                        if (x <= (startingX - distance))
+                        {
+                            return true;
+                        }
+                        timer = DateTime.Now.AddMilliseconds(50);
+                        break;
                 }
-                timer = DateTime.Now.AddMilliseconds(50);
             }
             return false;
         }

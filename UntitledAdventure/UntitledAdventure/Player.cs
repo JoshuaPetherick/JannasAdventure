@@ -13,6 +13,18 @@ namespace UntitledAdventure
 
         private int screenHeight;
         private int screenWidth;
+        public PlayerStates state { get; set; }
+        public enum PlayerStates
+        {
+            North,
+            NorthEast,
+            East,
+            SouthEast,
+            South,
+            SouthWest,
+            West,
+            NorthWest
+        };
 
         public Player(Texture2D texture, int x, int y, int height, int width)
         {
@@ -20,8 +32,8 @@ namespace UntitledAdventure
             this.texture = texture;
 
             // Moves x & y from top-left corner to center
-            this.x = (x - (texture.Width / 2));
-            this.y = (y - (texture.Height / 2));
+            this.x = ((height / 2) - (texture.Width / 2));
+            this.y = ((width / 2) - (texture.Height / 2));
 
             screenHeight = height;
             screenWidth = width;
@@ -36,7 +48,7 @@ namespace UntitledAdventure
             if ( timer < DateTime.Now)
             {
                 // Use switch here, possible pass in which key was pressed?
-                projectiles.Add(new Projectile(texture, 10, 200, this.x, this.y));
+                projectiles.Add(new Projectile(texture, 10, 200, this.x, this.y, state));
                 timer = DateTime.Now.AddSeconds(2);
             }
         }

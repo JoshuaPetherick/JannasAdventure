@@ -94,15 +94,13 @@ namespace UntitledAdventure
                     break;
 
                 case GameStates.Playing:
+                    // pX and pY will obviously need tweaking once game becomes... well a game lol
                     background = Content.Load<Texture2D>("Background");
-                    pX = (background.Width / 2);
-                    pY = (background.Height / 2);
                     player = new Player(Content.Load<Texture2D>("Player_Test"), pX, pY, background.Height, background.Width);
-                    camera.Position = new Vector2((pX - (sW / 2)), (pY - (sH / 2)));
-                    enemy1 = new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300);
-
                     pX = player.x;
                     pY = player.y;
+                    camera.Position = new Vector2((pX - (sW / 2)), (pY - (sH / 2)));
+                    enemy1 = new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300);
                     break;
             }
         }
@@ -132,6 +130,14 @@ namespace UntitledAdventure
 
                 case GameStates.Playing:
                     playingUpdate(gameTime);
+                    break;
+
+                case GameStates.Paused:
+                    // call pausedUpdate(gameTime);
+                    break;
+
+                case GameStates.Map:
+                    // call pausedUpdate(gameTime);
                     break;
             }
 
@@ -243,6 +249,7 @@ namespace UntitledAdventure
                 camera.Position -= new Vector2(0, 120) * deltaTime;
                 pY -= 2;
                 player.y = pY;
+                player.state = Player.PlayerStates.North;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
@@ -250,6 +257,7 @@ namespace UntitledAdventure
                 camera.Position += new Vector2(0, 120) * deltaTime;
                 pY += 2;
                 player.y = pY;
+                player.state = Player.PlayerStates.South;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
@@ -257,6 +265,7 @@ namespace UntitledAdventure
                 camera.Position -= new Vector2(120, 0) * deltaTime;
                 pX -= 2;
                 player.x = pX;
+                player.state = Player.PlayerStates.West;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
@@ -264,6 +273,7 @@ namespace UntitledAdventure
                 camera.Position += new Vector2(120, 0) * deltaTime;
                 pX += 2;
                 player.x = pX;
+                player.state = Player.PlayerStates.East;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D1))
