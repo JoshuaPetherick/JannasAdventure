@@ -15,10 +15,14 @@ namespace UntitledAdventure
             // Moves x & y from top-left corner to center
             this.x = (x - (text.Width / 2));
             this.y = (y - (text.Height / 2));
+            this.height = texture.Height;
+            this.width = texture.Width;
         }
 
         public int x { get; set; }
         public int y { get; set; }
+        public int height { get; set; }
+        public int width { get; set; }
 
         public bool collision(int x, int y, int height, int width)
         {

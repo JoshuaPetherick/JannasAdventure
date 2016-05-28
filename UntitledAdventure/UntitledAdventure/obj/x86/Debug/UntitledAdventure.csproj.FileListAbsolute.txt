@@ -52,3 +52,4 @@ C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\menu_background.png
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\start_button.png
 C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\Other2_Test.png
+C:\Users\test\Documents\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\my_font.spritefont

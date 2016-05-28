@@ -26,7 +26,7 @@ namespace UntitledAdventure
             NorthWest
         };
 
-        public Player(Texture2D texture, int x, int y, int height, int width)
+        public Player(Texture2D texture, int height, int width)
         {
             // Store player image and databse variable
             this.texture = texture;
@@ -53,13 +53,27 @@ namespace UntitledAdventure
             }
         }
 
-        public void update()
+        // List passed across also updates list passed from (Pointer(y))
+        public void update(List<Enemy> enemies)
         {
             for(int i = 0; i < projectiles.Count; i++)
             {
+                // If projectile reached max distance
                 if (projectiles[i].update() == true)
                 {
                     projectiles.RemoveAt(i);
+                }
+                else
+                {
+                    for(int j = 0; j < enemies.Count; j++)
+                    {
+                        // If projectile collided with enemy unit
+                        if (projectiles[i].collision(enemies[j].x, enemies[j].y, enemies[j].height, enemies[j].width) == true)
+                        {
+                            enemies.RemoveAt(j);
+                            projectiles.RemoveAt(i);
+                        }
+                    }
                 }
             }
         }

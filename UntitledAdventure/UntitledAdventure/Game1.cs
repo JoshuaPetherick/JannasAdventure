@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -19,12 +21,13 @@ namespace UntitledAdventure
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
-
-        Texture2D background, menuBackground;
         Camera2D camera;
-        Player player;
-        Enemy enemy1;
-        Button butt1, butt2;
+        Matrix viewMatix;
+
+        private Texture2D background, menuBackground;
+        private Player player;
+        private Button butt1, butt2;
+        List<Enemy> enemies = new List<Enemy>();
 
         GameStates state;
         enum GameStates
@@ -38,11 +41,6 @@ namespace UntitledAdventure
 
         private static int sW = 800; // Get Screen Width
         private static int sH = 600; // Get Screen Height
-
-        private int pX = 0;
-        private int pY = 0;
-
-        Matrix viewMatix;
 
         public Game1()
         {
@@ -94,13 +92,12 @@ namespace UntitledAdventure
                     break;
 
                 case GameStates.Playing:
-                    // pX and pY will obviously need tweaking once game becomes... well a game lol
+                    // player.x and player.y will obviously need tweaking once game becomes... well a game lol
                     background = Content.Load<Texture2D>("Background");
-                    player = new Player(Content.Load<Texture2D>("Player_Test"), pX, pY, background.Height, background.Width);
-                    pX = player.x;
-                    pY = player.y;
-                    camera.Position = new Vector2((pX - (sW / 2)), (pY - (sH / 2)));
-                    enemy1 = new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300);
+                    player = new Player(Content.Load<Texture2D>("Player_Test"), background.Height, background.Width); // Player X & Y made in object
+                    camera.Position = new Vector2((player.x - (sW / 2)), (player.y - (sH / 2)));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), 100, 400));
                     break;
             }
         }
@@ -111,8 +108,21 @@ namespace UntitledAdventure
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
-            //Content.Unload(); Will unload font...
+            switch (state)
+            {
+                case GameStates.Menu:
+                    // No sure fire way to unload/delete objects in C#
+                    menuBackground.Dispose();
+                    break;
+
+                case GameStates.Loading:
+                    break;
+
+                case GameStates.Playing:
+                    background.Dispose();
+                    break;
+            }
+            
         }
 
         /// <summary>
@@ -168,7 +178,6 @@ namespace UntitledAdventure
                     break;
 
                 case GameStates.Playing:
-                    // Draw shit in here!!
                     // Typical Order:
                     //  1. Background/Screen            - Done in this class
                     //  2. Objects/Enemies              - Classes store in this class array
@@ -177,7 +186,10 @@ namespace UntitledAdventure
                     spriteBatch.Begin(transformMatrix: viewMatix);
                     spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
                     spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
-                    enemy1.draw(spriteBatch);
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        enemies[i].draw(spriteBatch);
+                    }
 
                     player.draw(spriteBatch);
                     break;
@@ -186,7 +198,10 @@ namespace UntitledAdventure
                     spriteBatch.Begin(transformMatrix: viewMatix);
                     spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
                     spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
-                    enemy1.draw(spriteBatch);
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        enemies[i].draw(spriteBatch);
+                    }
 
                     // Pause menu here - trick here is to stop calling the Update and just read in mouse click positions...
                     player.draw(spriteBatch);
@@ -199,11 +214,6 @@ namespace UntitledAdventure
 
         private void menuUpdate(GameTime gameTime)
         {
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            //{
-            //    Exit();
-            //}
-
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 if (butt1.collision(Mouse.GetState().X, Mouse.GetState().Y, 1, 1))
@@ -247,33 +257,65 @@ namespace UntitledAdventure
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 camera.Position -= new Vector2(0, 120) * deltaTime;
-                pY -= 2;
-                player.y = pY;
+                player.y -= 2;
                 player.state = Player.PlayerStates.North;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                {
+                    player.state = Player.PlayerStates.NorthWest;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    player.state = Player.PlayerStates.NorthEast;
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 camera.Position += new Vector2(0, 120) * deltaTime;
-                pY += 2;
-                player.y = pY;
+                player.y += 2;
                 player.state = Player.PlayerStates.South;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                {
+                    player.state = Player.PlayerStates.SouthWest;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.D))
+                {
+                    player.state = Player.PlayerStates.SouthEast;
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 camera.Position -= new Vector2(120, 0) * deltaTime;
-                pX -= 2;
-                player.x = pX;
+                player.x -= 2;
                 player.state = Player.PlayerStates.West;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    player.state = Player.PlayerStates.NorthWest;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.S))
+                {
+                    player.state = Player.PlayerStates.SouthWest;
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
                 camera.Position += new Vector2(120, 0) * deltaTime;
-                pX += 2;
-                player.x = pX;
+                player.x += 2;
                 player.state = Player.PlayerStates.East;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
+                {
+                    player.state = Player.PlayerStates.NorthEast;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.S))
+                {
+                    player.state = Player.PlayerStates.SouthEast;
+                }
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D1))
@@ -281,7 +323,7 @@ namespace UntitledAdventure
                 player.castAbility(Content.Load<Texture2D>("Other2_Test"));
             }
 
-            player.update();
+            player.update(enemies);
         }
     }
 }
