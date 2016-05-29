@@ -6,23 +6,27 @@ namespace UntitledAdventure
     class Enemy
     {
         Texture2D texture;
+        SpriteFont font;
 
-        public Enemy(Texture2D text, int x, int y)
+        public Enemy(Texture2D texture, SpriteFont font, int x, int y)
         {
             // Store enemy image and databse variable
-            texture = text;
+            this.texture = texture;
 
             // Moves x & y from top-left corner to center
-            this.x = (x - (text.Width / 2));
-            this.y = (y - (text.Height / 2));
+            this.x = (x - (texture.Width / 2));
+            this.y = (y - (texture.Height / 2));
             this.height = texture.Height;
             this.width = texture.Width;
+            this.font = font;
+            this.health = 100; // Should be passed through into constructor (Not sure where from)
         }
 
         public int x { get; set; }
         public int y { get; set; }
         public int height { get; set; }
         public int width { get; set; }
+        public int health { get; set; }
 
         public bool collision(int x, int y, int height, int width)
         {
@@ -42,6 +46,7 @@ namespace UntitledAdventure
         {
             // Implement boolean if background coming off window space
             spriteBatch.Draw(texture, new Rectangle(x, y, texture.Width, texture.Height), Color.GhostWhite);
+            spriteBatch.DrawString(font, health.ToString(), new Vector2(x, (y - (texture.Height / 2))), Color.Red);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace UntitledAdventure
 {
     class Player
     {
-        DateTime timer;
+        DateTime castTimer;
         Texture2D texture;
         List<Projectile> projectiles = new List<Projectile>();
 
@@ -37,19 +37,29 @@ namespace UntitledAdventure
 
             screenHeight = height;
             screenWidth = width;
-            timer = DateTime.Now;
+            castTimer = DateTime.Now;
         }
 
         public int x { get; set; }
         public int y { get; set; }
 
-        public void castAbility(Texture2D texture)
+        public void castAbility1(Texture2D texture)
         {
-            if ( timer < DateTime.Now)
+            if ( castTimer < DateTime.Now)
             {
-                // Use switch here, possible pass in which key was pressed?
-                projectiles.Add(new Projectile(texture, 10, 200, this.x, this.y, state));
-                timer = DateTime.Now.AddSeconds(2);
+                // Make the values below variables that get passed based on select skils? Maybe a skill tree class?
+                projectiles.Add(new Projectile(texture, 20, 100, 2, this.x, this.y, state));
+                castTimer = DateTime.Now.AddSeconds(2);
+            }
+        }
+
+        public void castAbility2(Texture2D texture)
+        {
+            if (castTimer < DateTime.Now)
+            {
+                // Make the values below variables that get passed based on select skils? Maybe a skill tree class?
+                projectiles.Add(new Projectile(texture, 5, 300, 7, this.x, this.y, state));
+                castTimer = DateTime.Now.AddSeconds(0.75);
             }
         }
 
@@ -62,16 +72,23 @@ namespace UntitledAdventure
                 if (projectiles[i].update() == true)
                 {
                     projectiles.RemoveAt(i);
+                    i--;
                 }
                 else
                 {
                     for(int j = 0; j < enemies.Count; j++)
                     {
-                        // If projectile collided with enemy unit
+                        // If projectile collides with enemy unit (really wanna avoid this as lots of enemies and projectiles will make this really long)
                         if (projectiles[i].collision(enemies[j].x, enemies[j].y, enemies[j].height, enemies[j].width) == true)
                         {
-                            enemies.RemoveAt(j);
+                            enemies[j].health -= projectiles[i].damage;
+                            if (enemies[j].health <= 0)
+                            {
+                                enemies.RemoveAt(j);
+                            }
                             projectiles.RemoveAt(i);
+                            i--;
+                            j = enemies.Count; // Escape loop as projectile no longer exists!
                         }
                     }
                 }

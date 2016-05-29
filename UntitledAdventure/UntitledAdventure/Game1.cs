@@ -96,8 +96,8 @@ namespace UntitledAdventure
                     background = Content.Load<Texture2D>("Background");
                     player = new Player(Content.Load<Texture2D>("Player_Test"), background.Height, background.Width); // Player X & Y made in object
                     camera.Position = new Vector2((player.x - (sW / 2)), (player.y - (sH / 2)));
-                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), 200, 300));
-                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), 100, 400));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 200, 300));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 100, 400));
                     break;
             }
         }
@@ -320,7 +320,11 @@ namespace UntitledAdventure
 
             if (Keyboard.GetState().IsKeyDown(Keys.D1))
             {
-                player.castAbility(Content.Load<Texture2D>("Other2_Test"));
+                player.castAbility1(Content.Load<Texture2D>("Other2_Test"));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D2))
+            {
+                player.castAbility2(Content.Load<Texture2D>("Other1_Test"));
             }
 
             player.update(enemies);
