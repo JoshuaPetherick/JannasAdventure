@@ -24,7 +24,7 @@ namespace UntitledAdventure
         Camera2D camera;
         Matrix viewMatix;
 
-        private Texture2D background, menuBackground;
+        private Texture2D menuBackground, background1, background2;
         private Player player;
         private Button butt1, butt2;
         List<Enemy> enemies = new List<Enemy>();
@@ -93,11 +93,14 @@ namespace UntitledAdventure
 
                 case GameStates.Playing:
                     // player.x and player.y will obviously need tweaking once game becomes... well a game lol
-                    background = Content.Load<Texture2D>("Background");
-                    player = new Player(Content.Load<Texture2D>("Player_Test"), background.Height, background.Width); // Player X & Y made in object
+                    background1 = Content.Load<Texture2D>("Background");
+                    background2 = Content.Load<Texture2D>("Background");
+                    player = new Player(Content.Load<Texture2D>("Player_Test"), background1.Height, background1.Width); // Player X & Y made in object
                     camera.Position = new Vector2((player.x - (sW / 2)), (player.y - (sH / 2)));
-                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 200, 300));
-                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 100, 400));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 650, 500));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 350, 500));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 500, 650));
+                    enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 500, 350));
                     break;
             }
         }
@@ -119,7 +122,7 @@ namespace UntitledAdventure
                     break;
 
                 case GameStates.Playing:
-                    background.Dispose();
+                    background1.Dispose();
                     break;
             }
             
@@ -184,8 +187,9 @@ namespace UntitledAdventure
                     //  3. Player/Character             - Own object, stored in variable
                     //  4. UI/Map/Pause Menu/etc...     - Set, done in this class (Method perhaps)
                     spriteBatch.Begin(transformMatrix: viewMatix);
-                    spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
-                    spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
+                    spriteBatch.Draw(background1, new Rectangle(0, 0, background1.Width, background1.Height), Color.GhostWhite);
+                    spriteBatch.Draw(background2, new Rectangle(background1.Width, 0, background2.Width, background2.Height), Color.GhostWhite);
+                    spriteBatch.DrawString(font, "BETA!", new Vector2((sW / 2), (sH / 2)), Color.MediumPurple);
                     for (int i = 0; i < enemies.Count; i++)
                     {
                         enemies[i].draw(spriteBatch);
@@ -196,8 +200,8 @@ namespace UntitledAdventure
 
                 case GameStates.Paused:
                     spriteBatch.Begin(transformMatrix: viewMatix);
-                    spriteBatch.Draw(background, new Rectangle(0, 0, background.Width, background.Height), Color.GhostWhite);
-                    spriteBatch.DrawString(font, "Boobies", new Vector2((sW / 2), (sH / 2)), Color.GhostWhite);
+                    spriteBatch.Draw(background1, new Rectangle(0, 0, background1.Width, background1.Height), Color.GhostWhite);
+                    spriteBatch.DrawString(font, "BETA!", new Vector2((sW / 2), (sH / 2)), Color.Purple);
                     for (int i = 0; i < enemies.Count; i++)
                     {
                         enemies[i].draw(spriteBatch);
