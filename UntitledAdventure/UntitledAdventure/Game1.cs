@@ -127,6 +127,7 @@ namespace UntitledAdventure
 
                 case GameStates.Playing:
                     background1.Dispose();
+                    background2.Dispose();
                     break;
             }
             
