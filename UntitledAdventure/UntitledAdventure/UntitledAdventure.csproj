@@ -60,6 +60,7 @@
     <Compile Include="Camera2D.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Npc.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectile.cs" />
@@ -93,7 +94,9 @@
     <Content Include="Content\menu_background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\NPC_Test.png" />
+    <Content Include="Content\NPC_Test.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Other1_Test.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -105,6 +108,9 @@
     </Content>
     <Content Include="Content\start_button.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\textbox_background.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

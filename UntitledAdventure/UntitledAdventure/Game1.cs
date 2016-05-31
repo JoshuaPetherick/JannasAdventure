@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 // Then type "git pull"
 // Then "git stash"
 // Then "git pull" again
+// Other command is "git reset --hard HEAD"
 
 namespace UntitledAdventure
 {
@@ -24,10 +25,11 @@ namespace UntitledAdventure
         Camera2D camera;
         Matrix viewMatix;
 
-        private Texture2D menuBackground, background1, background2;
+        private Texture2D textboxBackground, menuBackground, background1, background2;
         private Player player;
         private Button butt1, butt2;
         List<Enemy> enemies = new List<Enemy>();
+        private Npc npc;
 
         GameStates state;
         enum GameStates
@@ -101,6 +103,8 @@ namespace UntitledAdventure
                     enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 350, 500));
                     enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 500, 650));
                     enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 500, 350));
+                    npc = new Npc(Content.Load<Texture2D>("NPC_Test"), font, 200, 400, "Bob");
+                    textboxBackground = Content.Load<Texture2D>("textbox_background");
                     break;
             }
         }
@@ -194,7 +198,7 @@ namespace UntitledAdventure
                     {
                         enemies[i].draw(spriteBatch);
                     }
-
+                    npc.draw(spriteBatch);
                     player.draw(spriteBatch);
                     break;
 
@@ -209,6 +213,7 @@ namespace UntitledAdventure
 
                     // Pause menu here - trick here is to stop calling the Update and just read in mouse click positions...
                     player.draw(spriteBatch);
+                    spriteBatch.Draw(textboxBackground, new Rectangle(25, 25, textboxBackground.Width, textboxBackground.Height), Color.GhostWhite);
                     break;
             }
 

@@ -95,6 +95,11 @@ namespace UntitledAdventure
             }
         }
 
+        public void talkToNpc(Npc npc)
+        {
+
+        }
+
         public void draw(SpriteBatch spriteBatch)
         {
             // Implement boolean if background coming off window space
