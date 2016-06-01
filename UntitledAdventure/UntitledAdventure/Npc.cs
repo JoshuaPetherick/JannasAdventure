@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace UntitledAdventure
@@ -7,6 +9,12 @@ namespace UntitledAdventure
     {
         Texture2D texture;
         SpriteFont font;
+        DateTime textTimer;
+        Conversation convo;
+
+        private int npcID;
+        private int textIND = 0;
+        private string text;
 
         public Npc(Texture2D texture, SpriteFont font, int x, int y, string name)
         {
@@ -30,10 +38,30 @@ namespace UntitledAdventure
         public int width { get; set; }
         public int health { get; set; }
 
+        public void startConvo()
+        {
+            textIND = 1;
+            textTimer = DateTime.Now.AddSeconds(3);
+        }
+
+        public void continueConvo()
+        {
+            if (textTimer <= DateTime.Now)
+            {
+                textIND++;
+                textTimer = DateTime.Now.AddSeconds(3);
+            }
+        }
+
+        public void endConvo()
+        {
+            textIND = 0;
+        }
+
         public bool collision(int x, int y, int height, int width)
         {
-            // Don't ask... just don't ask...
-            //  P.s. Axis-Aligned Bounding Box Collision (2D)
+            // Add distance to Width & Height - decide distance
+            // Then check if Button (Say E) is pressed then do something
             if ((x <= (this.x + texture.Width)) &&
                 ((x + width) >= this.x) &&
                 (y <= (this.y + texture.Height)) &&
@@ -48,7 +76,15 @@ namespace UntitledAdventure
         {
             // Implement boolean if background coming off window space
             spriteBatch.Draw(texture, new Rectangle(x, y, texture.Width, texture.Height), Color.GhostWhite);
-            spriteBatch.DrawString(font, name, new Vector2(x, (y - (texture.Height / 2))), Color.Purple);
+            // Text Box - drawn after Player
+            if (textIND != 0)
+            {
+                spriteBatch.DrawString(font, convo.getText(npcID, textIND), new Vector2(x, (y - (texture.Height / 2))), Color.Purple);
+            }
+            else
+            {
+                spriteBatch.DrawString(font, name, new Vector2(x, (y - (texture.Height / 2))), Color.Purple);
+            }
         }
     }
 }

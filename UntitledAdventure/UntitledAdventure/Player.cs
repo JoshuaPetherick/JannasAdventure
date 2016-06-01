@@ -34,6 +34,8 @@ namespace UntitledAdventure
             // Moves x & y from top-left corner to center
             this.x = ((height / 2) - (texture.Width / 2));
             this.y = ((width / 2) - (texture.Height / 2));
+            this.height = texture.Height;
+            this.width = texture.Width;
 
             screenHeight = height;
             screenWidth = width;
@@ -42,6 +44,8 @@ namespace UntitledAdventure
 
         public int x { get; set; }
         public int y { get; set; }
+        public int height { get; set; }
+        public int width { get; set; }
 
         public void castAbility1(Texture2D texture)
         {

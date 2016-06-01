@@ -231,6 +231,7 @@ namespace UntitledAdventure
                     state = GameStates.Loading;
                     LoadContent();
                     Draw(gameTime);
+
                     state = GameStates.Playing;
                     LoadContent();
                 }
@@ -335,6 +336,15 @@ namespace UntitledAdventure
             if (Keyboard.GetState().IsKeyDown(Keys.D2))
             {
                 player.castAbility2(Content.Load<Texture2D>("Other1_Test"));
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
+            {
+                //for(int i = 0; i < npcs.count; i++) { }
+                if(npc.collision(player.x, player.y, player.height, player.width) == true)
+                {
+                    Exit();
+                }
             }
 
             player.update(enemies);
