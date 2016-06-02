@@ -26,6 +26,7 @@ namespace UntitledAdventure
         Matrix viewMatix;
 
         private Texture2D textboxBackground, menuBackground, background1, background2;
+        private Texture2D eKey;
         private Player player;
         private Button butt1, butt2;
         List<Enemy> enemies = new List<Enemy>();
@@ -105,6 +106,7 @@ namespace UntitledAdventure
                     enemies.Add(new Enemy(Content.Load<Texture2D>("Enemy_Test"), font, 500, 350));
                     npc = new Npc(Content.Load<Texture2D>("NPC_Test"), font, 200, 400, "Bob");
                     textboxBackground = Content.Load<Texture2D>("textbox_background");
+                    eKey = Content.Load<Texture2D>("e_key");
                     break;
             }
         }
@@ -199,7 +201,22 @@ namespace UntitledAdventure
                     {
                         enemies[i].draw(spriteBatch);
                     }
+
                     npc.draw(spriteBatch);
+                    // Draw eKey if player is in collision area around NPC
+                    if (npc.collision(player.x, player.y, player.height, player.width) == true)
+                    {
+                        // When player is not talking, key is displayed
+                        if (npc.talking == false)
+                        {
+                            spriteBatch.Draw(eKey, new Rectangle((npc.x + 4), (npc.y - 40), eKey.Width, eKey.Height), Color.GhostWhite);
+                        }
+                        else if (npc.talking == true)
+                        {
+                            spriteBatch.Draw(textboxBackground, new Rectangle((player.x - 20), (player.y + 100), textboxBackground.Width, textboxBackground.Height), Color.GhostWhite);
+                        }
+                    }
+
                     player.draw(spriteBatch);
                     break;
 
@@ -214,7 +231,6 @@ namespace UntitledAdventure
 
                     // Pause menu here - trick here is to stop calling the Update and just read in mouse click positions...
                     player.draw(spriteBatch);
-                    spriteBatch.Draw(textboxBackground, new Rectangle(25, 25, textboxBackground.Width, textboxBackground.Height), Color.GhostWhite);
                     break;
             }
 
@@ -338,13 +354,17 @@ namespace UntitledAdventure
                 player.castAbility2(Content.Load<Texture2D>("Other1_Test"));
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.E))
+            if (npc.collision(player.x, player.y, player.height, player.width) == true)    
             {
                 //for(int i = 0; i < npcs.count; i++) { }
-                if(npc.collision(player.x, player.y, player.height, player.width) == true)
+                if (Keyboard.GetState().IsKeyDown(Keys.E))
                 {
-                    Exit();
+                    npc.talking = true;
                 }
+            }
+            else // When out of collision area, no longer talking to NPC
+            {
+                npc.talking = false;
             }
 
             player.update(enemies);

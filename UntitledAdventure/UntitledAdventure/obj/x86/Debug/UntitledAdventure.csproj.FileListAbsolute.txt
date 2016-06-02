@@ -62,3 +62,4 @@ C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdven
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\my_font.spritefont
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\NPC_Test.png
 C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\textbox_background.bmp
+C:\Users\Hannah\Documents\GitHub\JannasAdventure\UntitledAdventure\UntitledAdventure\bin\DesktopGL\x86\Debug\Content\e_key.bmp

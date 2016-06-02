@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections;
 
 namespace UntitledAdventure
 {
@@ -16,6 +17,8 @@ namespace UntitledAdventure
         private int textIND = 0;
         private string text;
 
+        public bool talking { get; set; }
+
         public Npc(Texture2D texture, SpriteFont font, int x, int y, string name)
         {
             // Store enemy image and databse variable
@@ -29,6 +32,7 @@ namespace UntitledAdventure
             this.font = font;
             this.health = 100; // Should be passed through into constructor (Not sure where from)
             this.name = name;
+            this.talking = false;
         }
 
         public int x { get; set; }
@@ -37,6 +41,7 @@ namespace UntitledAdventure
         public int height { get; set; }
         public int width { get; set; }
         public int health { get; set; }
+        
 
         public void startConvo()
         {
@@ -62,10 +67,10 @@ namespace UntitledAdventure
         {
             // Add distance to Width & Height - decide distance
             // Then check if Button (Say E) is pressed then do something
-            if ((x <= (this.x + texture.Width)) &&
-                ((x + width) >= this.x) &&
-                (y <= (this.y + texture.Height)) &&
-                ((y + height) >= this.y))
+            if ((x <= ((this.x - texture.Width) + (texture.Width * 3))) &&
+                ((x + width) >= (this.x - texture.Width)) &&
+                (y <= ((this.y - texture.Height) + (texture.Height * 3))) &&
+                ((y + height) >= (this.y - texture.Height)))
             {
                 return true;
             }

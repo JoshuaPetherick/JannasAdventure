@@ -26,7 +26,7 @@ namespace UntitledAdventure
             this.distance = distance;
             this.speed = speed;
             this.x = (x + (texture.Width / 2));
-            this.y = (y + (texture.Height / 2));
+            this.y = (y + texture.Height);
             this.state = state;
             startingX = x;
             startingY = y;

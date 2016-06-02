@@ -91,6 +91,9 @@
     <Content Include="Content\exit_button.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\e_key.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Map_Test.png" />
     <Content Include="Content\menu_background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
