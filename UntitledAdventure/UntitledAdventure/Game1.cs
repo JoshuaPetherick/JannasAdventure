@@ -19,7 +19,7 @@ namespace UntitledAdventure
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
+        GraphicsDeviceManager graphics; 
         SpriteBatch spriteBatch;
         SpriteFont font;
         Camera2D camera;
@@ -335,6 +335,12 @@ namespace UntitledAdventure
                 player.x += 2;
                 player.state = Player.PlayerStates.East;
 
+                //if (npc.collision(player.x, player.y, player.height, player.width, 0) == true)
+                //{
+                //camera.Position -= new Vector2(120, 0) * deltaTime;
+                //player.x -= 2;
+                //}
+
                 if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
                     player.state = Player.PlayerStates.NorthEast;
@@ -354,6 +360,7 @@ namespace UntitledAdventure
                 player.castAbility2(Content.Load<Texture2D>("Other1_Test"));
             }
 
+            // To also pass distance across, rather than storing inside NPC
             if (npc.collision(player.x, player.y, player.height, player.width) == true)    
             {
                 //for(int i = 0; i < npcs.count; i++) { }
